@@ -1,8 +1,9 @@
+import ListHeader from "./components/ListHeader";
 
 function App() {
   return (
-    <div className="App">
-      App
+    <div className="app">
+      <ListHeader listName={'Holiday Tick list'} />
     </div>
   );
 }
