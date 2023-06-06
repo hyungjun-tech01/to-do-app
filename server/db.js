@@ -9,11 +9,12 @@ require('dotenv').config();
 //    password: "planka",
 //    database: "planka"
 //})
+
 const pool = new Pool({
-    host: process.env.HOST,
-    user: process.env.USERNAME,
-    port: process.env.DBPORT,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
+    host: process.env.MYHOST,
+    user: process.env.MYUSERNAME,
+    port: process.env.MYDBPORT,
+    password: process.env.MYPASSWORD,
+    database: process.env.MYDATABASE
 })
 module.exports = pool;
