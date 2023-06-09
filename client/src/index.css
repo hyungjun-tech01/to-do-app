@@ -26,6 +26,40 @@ body {
     border-radius:  5px;
     background-color: transparent;
 }
+
+.edit {
+    border : 1.5px solid rgb(141, 181, 145);
+    color : rgb(131, 181, 145);
+    text-transform: uppercase;
+}
+
+.edit:hover{
+    background-color : rgb(182, 223, 186);
+}
+
+.edit:active{
+    border : 1.5px solid rgb(141, 181, 145);
+    color : rgb(255, 255, 255);
+    background-color: rgb(141, 181, 145);
+}
+
+.delete {
+    border : 1.5px solid rgb(255, 175, 163);
+    color : rgb(255, 175, 163);
+    text-transform: uppercase;
+}
+
+.delete:hover{
+    background-color : rgb(255, 201, 193);
+}
+
+.edit:active{
+    border : 1.5px solid rgb(255, 175, 163);
+    color : rgb(255, 255, 255);
+    background-color: rgb(255, 175, 163);
+}
+
+
 .list-header{
     width : 100%;
     display : flex;
@@ -34,4 +68,26 @@ body {
 
 }
 
-
+/*List Items */
+.list-item{
+    width : 100%;
+    margin : 10px 0px;
+    padding : 0px 0px 0px 10px ;
+    border-radius : 10px;
+    box-shadow: 1px 1px 1px 1px rgb(0,0,0); 
+    display:flex;
+    justify-content : space-between;
+}
+.info-container {
+    display: flex;
+    align-items:center;
+}
+.tick{
+    padding:10px;
+}
+.tick .path{
+    fill:none;
+    /*stroke: #25501010; */
+    stroke-miterlimit:10;
+    stroke-width: 32px;
+}
