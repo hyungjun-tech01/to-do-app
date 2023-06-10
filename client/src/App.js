@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
 
-
 function App() {
   const [tasks, setTasks] = useState(null);
 
