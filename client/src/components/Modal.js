@@ -1,16 +1,34 @@
 import {useState} from "react";
-function Modal({mode, setShowModal}) {
+function Modal({mode, setShowModal, task}) {
 
   const editMode = mode === "edit" ? true:false;
 
     const [data, setData] = useState(
     {
-      user_email:"",
-      title : "",
-      progress : "",
-      date: editMode ? "": new Date()
+      user_email: editMode ? task.user_email : "ania@test.com",
+      title : editMode ? task.title : "",
+      progress : editMode ? task.progress : "50",
+      date: editMode ? task.date : new Date()
     }
   );
+
+  const postData = async(e)=>{
+    e.preventDefault();
+    try{
+      const response = await fetch('http://localhost:8000/todos',{
+        method: "POST", 
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(data)
+       }); 
+       if(response.status === 200){
+        console.log('worked');
+        // modal 감추고 
+        // 다시 쿼리 
+       }
+    }catch(err){
+      console.log(err);
+    }
+  };
 
   const handleChange = (e)=>{
     console.log("changing", e.target);
@@ -48,7 +66,7 @@ function Modal({mode, setShowModal}) {
               value={data.progress}
               onChange={handleChange}
               />
-            <input className={mode} type="submit" />
+            <input className={mode} type="submit" onClick={editMode? '':postData}/>
           </form>
           </div>
       </div>
