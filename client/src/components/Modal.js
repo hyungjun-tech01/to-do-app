@@ -1,5 +1,5 @@
 import {useState} from "react";
-function Modal({mode, setShowModal, task}) {
+function Modal({mode, setShowModal, task, getData}) {
 
   const editMode = mode === "edit" ? true:false;
 
@@ -12,6 +12,7 @@ function Modal({mode, setShowModal, task}) {
     }
   );
 
+  //create new todos 
   const postData = async(e)=>{
     e.preventDefault();
     try{
@@ -20,13 +21,37 @@ function Modal({mode, setShowModal, task}) {
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(data)
        }); 
-       if(response.status === 200){
+       if(response.status === 200){  // 성공했을때 
         console.log('worked');
         // modal 감추고 
-        // 다시 쿼리 
+
+        setShowModal(false);
+        // 다시 쿼리 -> getData를 불러 주면됨.
+        getData();
        }
     }catch(err){
       console.log(err);
+    }
+  };
+
+  //edit todo 
+  const editData = async (e)=>{
+    e.preventDefault();
+    try{  
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`,{
+      method: "PUT", 
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+     }); 
+     if(response.status === 200){  // 성공했을때 
+      console.log('edit worked');
+      // modal 감추고 
+      setShowModal(false);
+      // 다시 쿼리 -> getData를 불러 주면됨.
+      getData();
+     }
+    }catch(err){
+      console.error(err);
     }
   };
 
@@ -66,7 +91,7 @@ function Modal({mode, setShowModal, task}) {
               value={data.progress}
               onChange={handleChange}
               />
-            <input className={mode} type="submit" onClick={editMode? '':postData}/>
+            <input className={mode} type="submit" onClick={editMode? editData:postData}/>
           </form>
           </div>
       </div>
