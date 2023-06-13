@@ -1,21 +1,48 @@
 import {useState} from "react";
 function Auth() {
-    const [ error, setError] = useState(null);
+    const [error, setError] = useState(null);
     const [isLogIn, setIsLogin] = useState(true);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [confirmPassword, setConfirmPassword] = useState(null);
+    
+    console.log(email, password, confirmPassword);
     const viewLogin = (status)=> {
       setError(null);
       setIsLogin(status);
+    }
+    const handleSubmit = async (e, endpoint) => {
+      e.preventDefault();
+      if(!isLogIn && password !== confirmPassword) {
+        setError('Make sure password match!');
+        return;
+      }
+      const response = await fetch(`http://localhost:8000/${endpoint}`,{
+        method : 'POST',
+        headers:{'Content-Type':'application/json'},
+        body : JSON.stringify({email, password})
+      })
+
+      const data = await response.json();
+
+      if(data.detail){
+        setError(data.detail);
+        console.log("error", error  );
+      }
+    }
+    const onEmailChange = (e)=> {
+      setEmail(e.target.value);
     }
     return (
       <div className="auth-container">
         <div className="auth-container-box">
           <form>
             <h2>{isLogIn? 'Please log in':'Please sign up!'}</h2>
-            <input type="email" placeholder="email"/>
-            <input type="password" placeholder="password"/>
-            {!isLogIn && <input type="password" placeholder="confirm password"/> }
-            <input className="create" type="submit" />
-            {error && <p>{error}</p>}
+            <input type="email" placeholder="email" onChange={onEmailChange}/>
+            <input type="password" placeholder="password" onChange={(e)=> setPassword(e.target.value)}/>
+            {!isLogIn && <input type="password" placeholder="confirm password" onChange={(e)=>setConfirmPassword(e.target.value)}/> }
+            <input className="create" type="submit" onClick={(e)=> handleSubmit(e, isLogIn ? 'login':'signup')} />
+            {error&&<p>{error}</p>}
           </form> 
           <div className="auth-options">
             <button 
