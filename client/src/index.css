@@ -168,3 +168,10 @@ input {
 .modal label {
     font-size : 13px;
 }
+
+/* Auth */
+.auth-container{
+    display:flex;
+    justify-content: center;
+    margin : 50px;
+}

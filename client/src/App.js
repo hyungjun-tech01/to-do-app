@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
+import Auth from "./components/Auth";
 
 function App() {
   const [tasks, setTasks] = useState(null);
+  const authToken = false;
 
   const getData = async () => {
     const userEmail = 'ania@test.com';
@@ -19,7 +21,11 @@ function App() {
   };
 
   // 화면 시작 시에 구동  --> 뭐든 바뀌면 새로 고침(???) 
-  useEffect(()=>getData, []);
+  useEffect(()=>{
+    if(authToken)
+      getData();
+    }
+  , []);
 
   // sort by date 
   const sortedTasks = tasks?.sort( (a,b) => new Date(a.date) - new Date(b.date));
@@ -28,8 +34,13 @@ function App() {
 
   return (
     <div className="app">
-      <ListHeader listName={'Holiday Tick list'} getData={getData}/>
-      {sortedTasks?.map( (task) => <ListItem key={task.id} task={task} getData={getData}/>)}
+      {!authToken && <Auth />}
+      {authToken &&
+        <>
+          <ListHeader listName={'Holiday Tick list'} getData={getData}/>
+          {sortedTasks?.map( (task) => <ListItem key={task.id} task={task} getData={getData}/>)}
+        </>
+      }
     </div>
   );
 }
