@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
 import Auth from "./components/Auth";
+import {useCookies} from "react-cookie";
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(null);
   const [tasks, setTasks] = useState(null);
-  const authToken = false;
 
+
+  const authToken = cookies.AuthToken;
+  const userEmail = cookies.Email;
   const getData = async () => {
-    const userEmail = 'ania@test.com';
+
     try{
       const response = await fetch(`http://localhost:8000/todos/${userEmail}`);  // backtik 
       const json = await response.json();

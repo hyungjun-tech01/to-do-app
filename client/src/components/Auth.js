@@ -1,12 +1,14 @@
 import {useState} from "react";
+import {useCookies} from "react-cookie";
 function Auth() {
+    const [cookies, setCookie, removeCookie] = useCookies(null);
     const [error, setError] = useState(null);
     const [isLogIn, setIsLogin] = useState(true);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
     
-    console.log(email, password, confirmPassword);
+    console.log(cookies);
     const viewLogin = (status)=> {
       setError(null);
       setIsLogin(status);
@@ -28,6 +30,11 @@ function Auth() {
       if(data.detail){
         setError(data.detail);
         console.log("error", error  );
+      }else{
+        setCookie('Email', data.email);
+        setCookie('AuthToken', data.token);
+        
+        window.location.reload(); // 이게 없으면 에러가 난다.. 왜일까??
       }
     }
     const onEmailChange = (e)=> {
