@@ -73,7 +73,7 @@ app.delete('/todos/:id', async(req,res)=>{
     }    
 })
 
-//signup
+//signup 계정 생성 
 app.post('/signup', async(req, res) => {
     const {email, password} = req.body;    
     const salt = bcrypt.genSaltSync(10);

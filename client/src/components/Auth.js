@@ -34,7 +34,7 @@ function Auth() {
         setCookie('Email', data.email);
         setCookie('AuthToken', data.token);
         
-        window.location.reload(); // 이게 없으면 에러가 난다.. 왜일까??
+        window.location.reload(); // 현재 URL(window.location)을 새로 고침 하는 기능 , 이게 없으면 에러가 난다.. 왜일까??
       }
     }
     const onEmailChange = (e)=> {
